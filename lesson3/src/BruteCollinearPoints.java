@@ -18,8 +18,6 @@ public class BruteCollinearPoints {
             if (points[i] == null) {
                 throw new NullPointerException("some point(s) is null");
             }
-        }
-        for (int i=0; i < points.length; i++) {
             for (int j=0; j < points.length; j++) {
                 if (points[i] == points[j] && i != j) {
                     throw new IllegalArgumentException("input contains repeated point");
