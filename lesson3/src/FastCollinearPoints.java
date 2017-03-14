@@ -1,6 +1,3 @@
-import java.lang.IllegalArgumentException;
-import java.lang.NullPointerException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -29,13 +26,13 @@ public class FastCollinearPoints {
 
             Arrays.sort(copy, points[i].slopeOrder());
             int points_in_line_counter = 2;
-            double prev_slope = points[i].slopeTo(copy[0]);
+            double prevSlope = points[i].slopeTo(copy[0]);
             Point min = points[i];
-            int start_index = 0;
-            if (points[i].compareTo(copy[start_index]) == 0) {
-                start_index = 1;
+            int startIndex = 0;
+            if (points[i].compareTo(copy[startIndex]) == 0) {
+                startIndex = 1;
             }
-            Point max = copy[start_index];
+            Point max = copy[startIndex];
             Point buf;
             if (min.compareTo(max) == +1) {
                 buf = max;
@@ -43,22 +40,22 @@ public class FastCollinearPoints {
                 min = buf;
             }
 
-            LineSegment cur_ls;
-            for (int j = start_index+1; j < points.length; j++) {
+            LineSegment curLS;
+            for (int j = startIndex+1; j < points.length; j++) {
                 if (points[i].compareTo(copy[j]) == 0) continue;
 
                 if (copy[j].compareTo(min) == -1) min = copy[j];
                 if (copy[j].compareTo(max) == +1) max = copy[j];
 
-                double cur_slope = points[i].slopeTo(copy[j]);
-                if (cur_slope == prev_slope) {
-                    cur_ls = new LineSegment(min, max);
+                double curSlope = points[i].slopeTo(copy[j]);
+                if (curSlope == prevSlope) {
+                    curLS = new LineSegment(min, max);
                     points_in_line_counter++;
                     if (points_in_line_counter == 4) {
-                        segments.add(cur_ls);
+                        segments.add(curLS);
                     } else if (points_in_line_counter > 4) {
                         segments.remove(segments.size());
-                        segments.add(cur_ls);
+                        segments.add(curLS);
                     }
                 } else {
                     points_in_line_counter = 1;

@@ -1,5 +1,3 @@
-import java.lang.IllegalArgumentException;
-import java.lang.NullPointerException;
 import java.util.ArrayList;
 
 public class BruteCollinearPoints {
@@ -11,16 +9,16 @@ public class BruteCollinearPoints {
         if (points == null) {
             throw new NullPointerException("argument is null");
         }
-        for (int i=0; i < points.length; i++) {
+        for (int i = 0; i < points.length; i++) {
             if (points[i] == null) {
                 throw new NullPointerException("some point(s) is null");
             }
-            for (int j=0; j < points.length; j++) {
+            for (int j = 0; j < points.length; j++) {
                 if (points[i].compareTo(points[j]) == 0 && i != j) {
                     throw new IllegalArgumentException("input contains repeated point");
                 }
-                for (int k=0; k < points.length; k++) {
-                    for (int l=0; l < points.length; l++) {
+                for (int k = 0; k < points.length; k++) {
+                    for (int l = 0; l < points.length; l++) {
                         double ij_slope = points[i].slopeTo(points[j]);
                         double jk_slope = points[j].slopeTo(points[k]);
                         double kl_slope = points[k].slopeTo(points[l]);

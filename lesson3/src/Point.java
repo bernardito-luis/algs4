@@ -5,7 +5,6 @@ public class Point implements Comparable<Point> {
 
     private final int x;
     private final int y;
-    private static final Point base = new Point(0,0);
 
     /**
      * Initializes a new point.
@@ -40,7 +39,7 @@ public class Point implements Comparable<Point> {
     public double slopeTo(Point that) {
         if (this.compareTo(that) == 0) return Double.NEGATIVE_INFINITY;
         if (this.x == that.x) return Double.POSITIVE_INFINITY;
-        return (double) (that.y - this.y) / (double) (that.x - this.x);
+        return (double) (this.y - that.y) / (double) (this.x - that.x);
     }
 
     /**
@@ -58,6 +57,7 @@ public class Point implements Comparable<Point> {
         return 0;
     }
 
+
     /**
      * Compares two points by the slope they make with this point.
      * The slope is defined as in the slopeTo() method.
@@ -71,7 +71,6 @@ public class Point implements Comparable<Point> {
         public int compare(Point q1, Point q2) {
             if (slopeTo(q1) > slopeTo(q2)) return +1;
             if (slopeTo(q1) < slopeTo(q2)) return -1;
-            // if (base.slopeTo(q1) == base.slopeTo(q2)) return 0;
             return 0;
         }
     }
@@ -89,5 +88,6 @@ public class Point implements Comparable<Point> {
     }
 
     public static void main(String[] args) {
+        System.out.println("!!");
     }
 }
