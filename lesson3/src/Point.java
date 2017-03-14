@@ -69,8 +69,8 @@ public class Point implements Comparable<Point> {
     }
     private class SlopeOrder implements Comparator<Point> {
         public int compare(Point q1, Point q2) {
-            if (base.slopeTo(q1) > base.slopeTo(q2)) return +1;
-            if (base.slopeTo(q1) < base.slopeTo(q2)) return -1;
+            if (slopeTo(q1) > slopeTo(q2)) return +1;
+            if (slopeTo(q1) < slopeTo(q2)) return -1;
             // if (base.slopeTo(q1) == base.slopeTo(q2)) return 0;
             return 0;
         }
