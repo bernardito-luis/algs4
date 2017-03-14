@@ -14,18 +14,18 @@ public class FastCollinearPoints {
         if (points == null) {
             throw new NullPointerException("argument is null");
         }
-        for (int i=0; i < points.length; i++) {
+        for (int i = 0; i < points.length; i++) {
             if (points[i] == null) throw new NullPointerException("some point(s) is null");
 
-            for (int j=0; j < points.length; j++) {
+            for (int j = 0; j < points.length; j++) {
                 if (points[i].compareTo(points[j]) == 0) {
                     throw new IllegalArgumentException("input contains repeated point");
                 }
             }
         }
-        for (int i=0; i < points.length; i++) {
+        for (int i = 0; i < points.length; i++) {
             Point[] copy = new Point[points.length];
-            for (int j=0; j < points.length; j++) copy[j] = points[j];
+            for (int j = 0; j < points.length; j++) copy[j] = points[j];
 
             Arrays.sort(copy, points[i].slopeOrder());
             int points_in_line_counter = 2;
@@ -44,7 +44,7 @@ public class FastCollinearPoints {
             }
 
             LineSegment cur_ls;
-            for (int j=start_index+1; j < points.length; j++) {
+            for (int j = start_index+1; j < points.length; j++) {
                 if (points[i].compareTo(copy[j]) == 0) continue;
 
                 if (copy[j].compareTo(min) == -1) min = copy[j];
@@ -77,24 +77,5 @@ public class FastCollinearPoints {
     }
 
     public static void main(String[] args) {
-        Point p1 = new Point(0,0);
-        Point p2 = new Point(1,1);
-        Point p3 = new Point(2,2);
-        Point p4 = new Point(4,4);
-        Point p5 = new Point(1,2);
-        ArrayList<Point> arr = new ArrayList<Point>();
-        arr.add(p1);
-        arr.add(p5);
-        arr.add(p2);
-        arr.add(p3);
-        arr.add(p4);
-
-//        arr.remove(p2);
-        Point p = new Point(1,1);
-        arr.remove(p);
-//        Arrays.sort(arr2, p1.slopeOrder());
-//        for (int i=0; i < arr.size(); i++) {
-//            System.out.println(arr.get(i));
-//        }
     }
 }
