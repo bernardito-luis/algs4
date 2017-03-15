@@ -18,7 +18,7 @@ public class FastCollinearPoints {
         for (int i = 0; i < points.length; i++) {
             if (points[i] == null) throw new NullPointerException("some point(s) is null");
 
-            for (int j = 0; j < points.length; j++) {
+            for (int j = i+1; j < points.length; j++) {
                 if (points[i].compareTo(points[j]) == 0) {
                     throw new IllegalArgumentException("input contains repeated point");
                 }
@@ -30,12 +30,12 @@ public class FastCollinearPoints {
 
             Arrays.sort(copy, points[i].slopeOrder());
             int points_in_line_counter = 2;
-            double prevSlope = points[i].slopeTo(copy[0]);
             Point min = points[i];
             int startIndex = 0;
             if (points[i].compareTo(copy[startIndex]) == 0) {
                 startIndex = 1;
             }
+            double prevSlope = points[i].slopeTo(copy[startIndex]);
             Point max = copy[startIndex];
             Point buf;
             if (min.compareTo(max) == +1) {
@@ -53,16 +53,25 @@ public class FastCollinearPoints {
 
                 double curSlope = points[i].slopeTo(copy[j]);
                 if (curSlope == prevSlope) {
-                    curLS = new LineSegment(min, max);
                     points_in_line_counter++;
                     if (points_in_line_counter == 4) {
+                        curLS = new LineSegment(min, max);
                         segments.add(curLS);
                     } else if (points_in_line_counter > 4) {
-                        segments.remove(segments.size());
+                        curLS = new LineSegment(min, max);
+                        segments.remove(segments.size()-1);
                         segments.add(curLS);
                     }
                 } else {
-                    points_in_line_counter = 1;
+                    points_in_line_counter = 2;
+                    prevSlope = curSlope;
+                    min = points[i];
+                    max = copy[j];
+                    if (min.compareTo(max) == +1) {
+                        buf = max;
+                        max = min;
+                        min = buf;
+                    }
                 }
             }
         }
@@ -101,7 +110,7 @@ public class FastCollinearPoints {
         StdDraw.show();
 
         // print and draw the line segments
-        BruteCollinearPoints collinear = new BruteCollinearPoints(points);
+        FastCollinearPoints collinear = new FastCollinearPoints(points);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
             segment.draw();
