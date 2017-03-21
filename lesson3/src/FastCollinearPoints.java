@@ -2,6 +2,8 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
+import java.lang.reflect.Array;
+import java.util.Objects;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,6 +13,7 @@ public class FastCollinearPoints {
 
     public FastCollinearPoints(Point[] points) {
         // finds all line segments containing 4 or more points
+        Arrays.sort(points);
         segments = new ArrayList<LineSegment>();
         if (points == null) {
             throw new NullPointerException("argument is null");
@@ -35,19 +38,34 @@ public class FastCollinearPoints {
             if (points[i].compareTo(copy[startIndex]) == 0) {
                 startIndex = 1;
             }
+            double skipSlope = points[i].slopeTo(copy[startIndex]);
+            for (int j = startIndex+1; j < copy.length; j++) {
+                skipSlope = points[i].slopeTo(copy[j]);
+                if (points[i].compareTo(copy[j]) != -1) {
+                    continue;
+                }
+
+                if (points[i].compareTo(copy[j]) == 0) {
+                    startIndex = j;
+                }
+            }
             double prevSlope = points[i].slopeTo(copy[startIndex]);
             Point max = copy[startIndex];
             Point buf;
-            if (min.compareTo(max) == +1) {
-                buf = max;
-                max = min;
-                min = buf;
-            }
+//            if (min.compareTo(max) == +1) {
+//                buf = max;
+//                max = min;
+//                min = buf;
+//            }
 
             LineSegment curLS;
             for (int j = startIndex+1; j < points.length; j++) {
                 if (points[i].compareTo(copy[j]) == 0) continue;
 
+                if (points[i].compareTo(copy[j]) != -1) {
+                    points_in_line_counter = 1;
+                    continue;
+                }
                 if (copy[j].compareTo(min) == -1) min = copy[j];
                 if (copy[j].compareTo(max) == +1) max = copy[j];
 
