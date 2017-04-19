@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class Board {
     private int n;
-    public int[][] current_board;
+    private final int[][] current_board;
     private int blank_x;
     private int blank_y;
 
@@ -42,6 +42,8 @@ public class Board {
         for (int i = 0; i < this.n; i++)
             for (int j = 0; j < this.n; j++) {
                 val = this.current_board[i][j];
+                if (val == 0)
+                    continue;
                 goal_x = val / this.n;
                 goal_y = val % this.n - 1;
                 if (goal_y < 0)
@@ -94,40 +96,40 @@ public class Board {
     public Iterable<Board> neighbors() {
         ArrayList<Board> neighborhood = new ArrayList<Board>();
         if (this.blank_x + 1 != this.n) {
-            this.current_board[blank_x][blank_y] =
-                    this.current_board[blank_x+1][blank_y];
-            this.current_board[blank_x+1][blank_y] = 0;
-            neighborhood.add(this);
-            this.current_board[blank_x+1][blank_y] =
-                    this.current_board[blank_x][blank_y];
-            this.current_board[blank_x][blank_y] = 0;
+            int [][] new_board = new int [n][n];
+            for (int i = 0; i < this.n; i++)
+                for (int j = 0; j < this.n; j++)
+                    new_board[i][j] = current_board[i][j];
+            new_board[blank_x][blank_y] = new_board[blank_x+1][blank_y];
+            new_board[blank_x+1][blank_y] = 0;
+            neighborhood.add(new Board(new_board));
         }
         if (this.blank_y + 1 != this.n) {
-            this.current_board[blank_x][blank_y] =
-                    this.current_board[blank_x][blank_y+1];
-            this.current_board[blank_x][blank_y+1] = 0;
-            neighborhood.add(this);
-            this.current_board[blank_x][blank_y+1] =
-                    this.current_board[blank_x][blank_y];
-            this.current_board[blank_x][blank_y] = 0;
+            int [][] new_board = new int [n][n];
+            for (int i = 0; i < this.n; i++)
+                for (int j = 0; j < this.n; j++)
+                    new_board[i][j] = current_board[i][j];
+            new_board[blank_x][blank_y] = new_board[blank_x][blank_y+1];
+            new_board[blank_x][blank_y+1] = 0;
+            neighborhood.add(new Board(new_board));
         }
         if (this.blank_x > 0) {
-            this.current_board[blank_x][blank_y] =
-                    this.current_board[blank_x-1][blank_y];
-            this.current_board[blank_x-1][blank_y] = 0;
-            neighborhood.add(this);
-            this.current_board[blank_x-1][blank_y] =
-                    this.current_board[blank_x][blank_y];
-            this.current_board[blank_x][blank_y] = 0;
+            int [][] new_board = new int [n][n];
+            for (int i = 0; i < this.n; i++)
+                for (int j = 0; j < this.n; j++)
+                    new_board[i][j] = current_board[i][j];
+            new_board[blank_x][blank_y] = new_board[blank_x-1][blank_y];
+            new_board[blank_x-1][blank_y] = 0;
+            neighborhood.add(new Board(new_board));
         }
         if (this.blank_y > 0) {
-            this.current_board[blank_x][blank_y] =
-                    this.current_board[blank_x][blank_y-1];
-            this.current_board[blank_x][blank_y-1] = 0;
-            neighborhood.add(this);
-            this.current_board[blank_x][blank_y-1] =
-                    this.current_board[blank_x][blank_y];
-            this.current_board[blank_x][blank_y] = 0;
+            int [][] new_board = new int [n][n];
+            for (int i = 0; i < this.n; i++)
+                for (int j = 0; j < this.n; j++)
+                    new_board[i][j] = current_board[i][j];
+            new_board[blank_x][blank_y] = new_board[blank_x][blank_y-1];
+            new_board[blank_x][blank_y-1] = 0;
+            neighborhood.add(new Board(new_board));
         }
         return neighborhood;
     }
