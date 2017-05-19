@@ -28,7 +28,8 @@ public class Board {
         int out_of_place = 0;
         for (int i = 0; i < this.n; i++)
             for (int j = 0; j < this.n; j++)
-                if (i * n + j + 1 != this.current_board[i][j])
+                if (i * n + j + 1 != this.current_board[i][j] &&
+                        this.current_board[i][j] != 0)
                     out_of_place++;
 
         return out_of_place;
@@ -46,9 +47,14 @@ public class Board {
                     continue;
                 goal_x = val / this.n;
                 goal_y = val % this.n - 1;
-                if (goal_y < 0)
+                if (goal_y < 0) {
+                    System.out.println("Hit!!!");
+                    goal_x -= 1;
                     goal_y += this.n;
+                }
                 out_of_place += Math.abs(i - goal_x) + Math.abs(j - goal_y);
+                System.out.print("  ");
+                System.out.println(Math.abs(i - goal_x) + Math.abs(j - goal_y));
             }
         return out_of_place;
     }
