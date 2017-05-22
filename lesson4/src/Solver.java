@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
@@ -8,17 +9,15 @@ import edu.princeton.cs.algs4.MinPQ;
 public class Solver {
     private final MinPQ<Board> boards;
 
-    private class BoardComp implements Comparable<Board> {
+    private class BoardComp implements Comparator<Board> {
         private final Board board;
 
         public BoardComp(Board board) {
             this.board = board;
         }
 
-        public int compareTo(Board that) {
-            if (this.board.manhattan() > that.manhattan()) return +1;
-            if (this.board.manhattan() < that.manhattan()) return -1;
-            return 0;
+        public int compare(Board v, Board w) {
+            return v.compareTo(w);
         }
 
     }
@@ -26,7 +25,7 @@ public class Solver {
     public Solver(Board initial) {
         // find a solution to the initial board (using the A* algorithm)
         Board twin = initial.twin();
-        BoardComp comp = new BoardComp(Board);
+        BoardComp comp = new BoardComp(initial);
         boards = new MinPQ<Board>(comp);
         boards.insert(initial);
         Board candidat;
