@@ -1,6 +1,6 @@
 import java.lang.Math;
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.lang.NullPointerException;
 
 public class Board {
     private int n;
@@ -9,6 +9,7 @@ public class Board {
     private int blank_y;
 
     public Board(int[][] blocks) {
+        if (blocks == null) throw new NullPointerException();
         n = blocks.length;
         this.current_board = new int[this.n][this.n];
         for (int i = 0; i < this.n; i++)
@@ -49,13 +50,10 @@ public class Board {
                 goal_x = val / this.n;
                 goal_y = val % this.n - 1;
                 if (goal_y < 0) {
-                    System.out.println("Hit!!!");
                     goal_x -= 1;
                     goal_y += this.n;
                 }
                 out_of_place += Math.abs(i - goal_x) + Math.abs(j - goal_y);
-                System.out.print("  ");
-                System.out.println(Math.abs(i - goal_x) + Math.abs(j - goal_y));
             }
         return out_of_place;
     }
@@ -142,8 +140,10 @@ public class Board {
     }
 
     public int compareTo(Board that) {
-        if (this.manhattan() > that.manhattan()) return +1;
-        if (this.manhattan() < that.manhattan()) return -1;
+//        if (this.manhattan() > that.manhattan()) return +1;
+//        if (this.manhattan() < that.manhattan()) return -1;
+        if (this.hamming() > that.hamming()) return +1;
+        if (this.hamming() < that.hamming()) return -1;
         return 0;
     }
 
