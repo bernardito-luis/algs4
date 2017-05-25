@@ -68,8 +68,6 @@ public class Solver {
         twin_boards.insert(twin_node);
         SearchNode candidate;
         SearchNode twin_candidate;
-        int moves = 0;
-        int twin_moves = 0;
         while (!boards.isEmpty() || !twin_boards.isEmpty()) {
             if (!boards.isEmpty()) {
                 candidate = boards.delMin();
@@ -82,12 +80,11 @@ public class Solver {
                     }
                     break;
                 } else {
-                    moves++;
                     for (Board item : candidate.board.neighbors()) {
                         if (candidate.prev != null && item.equals(candidate.prev.board)) {
                             continue;
                         }
-                        SearchNode new_node = new SearchNode(item, candidate, moves);
+                        SearchNode new_node = new SearchNode(item, candidate, candidate.path_to_root().size());
                         boards.insert(new_node);
                     }
                 }
@@ -100,12 +97,11 @@ public class Solver {
                     solution_boards = null;
                     break;
                 } else {
-                    twin_moves++;
                     for (Board item : twin_candidate.board.neighbors()) {
                         if (twin_candidate.prev != null && item.equals(twin_candidate.prev.board)) {
                             continue;
                         }
-                        SearchNode new_node = new SearchNode(item, twin_candidate, twin_moves);
+                        SearchNode new_node = new SearchNode(item, twin_candidate, twin_candidate.path_to_root().size());
                         twin_boards.insert(new_node);
                     }
                 }
