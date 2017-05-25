@@ -139,14 +139,6 @@ public class Board {
         return neighborhood;
     }
 
-    public int compareTo(Board that) {
-//        if (this.manhattan() > that.manhattan()) return +1;
-//        if (this.manhattan() < that.manhattan()) return -1;
-        if (this.hamming() > that.hamming()) return +1;
-        if (this.hamming() < that.hamming()) return -1;
-        return 0;
-    }
-
     public String toString() {
         StringBuilder s = new StringBuilder();
         s.append(n + "\n");

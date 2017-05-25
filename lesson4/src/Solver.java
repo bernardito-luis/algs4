@@ -74,7 +74,6 @@ public class Solver {
             if (!boards.isEmpty()) {
                 candidate = boards.delMin();
                 if (candidate.board.isGoal()) {
-                    System.out.println("Hooray!!!");
                     solvable = true;
                     solution_moves = candidate.path_to_root().size() - 1;
                     Stack<Board> buf = candidate.path_to_root();
@@ -96,7 +95,6 @@ public class Solver {
             if (!twin_boards.isEmpty()) {
                 twin_candidate = twin_boards.delMin();
                 if (twin_candidate.board.isGoal()) {
-                    System.out.println("Hooray NOT!!!");
                     solvable = false;
                     solution_moves = -1;
                     break;
