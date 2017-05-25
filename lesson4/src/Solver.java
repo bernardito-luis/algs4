@@ -97,6 +97,7 @@ public class Solver {
                 if (twin_candidate.board.isGoal()) {
                     solvable = false;
                     solution_moves = -1;
+                    solution_boards = null;
                     break;
                 } else {
                     twin_moves++;
@@ -118,7 +119,6 @@ public class Solver {
         return solution_moves;
     }
     public Iterable<Board> solution() {
-        if (!solvable) return null;
         return solution_boards;
     }
     public static void main(String[] args) {
